@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.video-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.8;
+}
+
+.encabezado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    background-color: transparent;
+    color: black;
+    font-size: 22px;
+}
+
+.encabezado .logo {
+    width: 100px;
+    margin-left: 10px;
+}
+
+.tiempo {
+    font-size: 2em;
+    margin: 10px;
+    color: black;
+    background-color: rgb(0,0,0,0.7);
+    padding: 10px;
+}
+
+.Primer-Contenedor {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.container {
+    background-color: none;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.ahorcado img {
+    width: 200px;
+    height: 200px;
+}
+
+.palabra {
+    font-size: 2em;
+    margin: 20px;
+    letter-spacing: 5px;
+}
+
+#intentosRestantes {
+    font-size: 1.2em;
+    margin: 10px;
+}
+
+.teclado {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 20px;
+    margin: 10px auto;
+    max-width: 350px;
+}
+
+.teclado button {
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+
+.teclado button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+}
+
+.botones button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.Imagen-De-Referencia {
+    background-color: none;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.dialogo {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 2px solid black;
+    z-index: 1;
+}
+
+#dialogoCuadro {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
