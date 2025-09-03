@@ -1,5 +1,3 @@
-let ahorcadoContainer = document.getElementById("ahorcado");
-let palabraContainer = document.getElementById("palabra");
 let intentosDisplay = document.getElementById("intentosRestantes");
 let mensaje = document.getElementById("mensaje");
 let cronometroDisplay = document.getElementById("cronometro");
@@ -8,8 +6,21 @@ let dialogoCuadro = document.getElementById("dialogoCuadro");
 let dialogoTitulo = document.getElementById("dialogoTitulo");
 let dialogoMensaje = document.getElementById("dialogoMensaje");
 let teclado = document.getElementById("teclado");
-let palabras = ["GATO", "PERRO", "CASA", "ARBOL"];
-let pistas = [];
+let palabraOcultaDisplay = document.getElementById("palabra-oculta");
+let ahorcadoContainer = document.querySelector(".ahorcado-container");
+let pistaTexto = document.getElementById("pista-texto");
+
+let palabras = ["PYTHON", "HTML", "JAVASCRIPT", "CSS", "AJAX", "DATABASE"];
+
+let pistas = {
+    "PYTHON": "Es un lenguaje de programación muy popular para el desarrollo web y la ciencia de datos.",
+    "HTML": "Es la base de cualquier página web.",
+    "JAVASCRIPT": "Es el lenguaje que hace que las páginas web sean interactivas.",
+    "CSS": "Este lenguaje se usa para estilizar una página web.",
+    "AJAX": "Permite actualizar partes de una página web sin recargarla.",
+    "DATABASE": "Es un sistema que almacena y organiza datos."
+};
+
 let estado = [];
 let tiempo = 300;
 let intervaloCronometro;
@@ -17,6 +28,7 @@ let juegoActivo = false;
 let juegoPausado = false;
 let intentos = 6;
 let palabraSeleccionada = "";
+let errorCount = 0;
 
 function mezclar(array) {
     let copia = [...array];
@@ -34,14 +46,19 @@ function dibujar() {
             display[i] = palabraSeleccionada[i].toUpperCase();
         }
     }
-    if (palabraContainer) {
-        palabraContainer.textContent = display.join("");
-    }
+    palabraOcultaDisplay.textContent = display.join(" ");
     intentosDisplay.textContent = `Intentos restantes: ${intentos}`;
 }
 
+function agregarParte() {
+    let partes = ["cabeza", "torso", "brazo-izquierdo", "brazo-derecho", "pierna-izquierda", "pierna-derecha"];
+    if (errorCount >= 0 && errorCount < partes.length) {
+        document.getElementById(partes[errorCount]).classList.add("visible");
+    }
+}
+
 function mover(letra) {
-    if (!juegoActivo || estado.includes(letra)) return;
+    if (!juegoActivo || juegoPausado || estado.includes(letra)) return;
     estado.push(letra);
     let botones = teclado.getElementsByTagName("button");
     for (let btn of botones) {
@@ -51,6 +68,8 @@ function mover(letra) {
     }
     if (!palabraSeleccionada.toUpperCase().includes(letra)) {
         intentos--;
+        agregarParte();
+        errorCount++;
     }
     dibujar();
     verificar();
@@ -81,7 +100,16 @@ function iniciarJuego() {
     tiempo = 300;
     intentos = 6;
     estado = [];
-    palabraSeleccionada = mezclar(palabras)[0].toUpperCase();
+    errorCount = 0;
+    
+    let partes = document.querySelectorAll('.ahorcado-parte');
+    partes.forEach(parte => parte.classList.remove('visible'));
+
+    let indiceAleatorio = Math.floor(Math.random() * palabras.length);
+    palabraSeleccionada = palabras[indiceAleatorio];
+    
+    pistaTexto.textContent = pistas[palabraSeleccionada]; 
+    
     intervaloCronometro = setInterval(() => {
         if (tiempo > 0) {
             tiempo--;
@@ -104,6 +132,11 @@ function iniciarJuego() {
     for (let btn of botones) {
         btn.disabled = false;
     }
+    teclado.addEventListener("click", function(event) {
+        if (event.target.classList.contains("btn")) {
+            mover(event.target.textContent);
+        }
+    });
 }
 
 function reiniciar() {
@@ -113,16 +146,22 @@ function reiniciar() {
     tiempo = 300;
     intentos = 6;
     estado = [];
+    errorCount = 0;
+
+    let partes = document.querySelectorAll('.ahorcado-parte');
+    partes.forEach(parte => parte.classList.remove('visible'));
+    pistaTexto.textContent = "";
+
     cronometroDisplay.innerText = "05:00";
     mensaje.innerText = "";
-    palabraSeleccionada = mezclar(palabras)[0].toUpperCase();
-    dibujar();
+    palabraOcultaDisplay.textContent = "";
     dialogo.style.display = "none";
     dialogoCuadro.style.display = "none";
     let botones = teclado.getElementsByTagName("button");
     for (let btn of botones) {
         btn.disabled = false;
     }
+    dibujar();
 }
 
 function pausarJuego() {
