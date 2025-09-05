@@ -1,5 +1,6 @@
-import Modelo.UsuarioDAO;
+package Controlador;
 
+import Modelo.UsuarioDAO;
 import Modelo.Usuario;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -28,10 +29,10 @@ public class Validar extends HttpServlet {
             throws ServletException, IOException {
         String btnIngresar = request.getParameter("btnIngresar");
         if (btnIngresar.equalsIgnoreCase("Ingresar")) {
-            String correo = request.getParameter("txtCorreo");
-            String pass = request.getParameter("txtContrasena");
-            usuario = usuarioDAO.validar(correo, pass);
-            if (usuario.getEmailEmpleado() != null) {
+            String user = request.getParameter("txtUsuario");
+            String contra = request.getParameter("txtContrasena");
+            usuario = usuarioDAO.validar(user, contra);
+            if (usuario.getConstrasenia() != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("usuarioLogueado", usuario);
                 request.getRequestDispatcher("Controlador?menu=Principal").forward(request, response);

@@ -1,13 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Modelo;
 
-/**
- *
- * @author informatica
- */
+import Config.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PalabraDAO {
+    
+    Conexion cn = new Conexion();
+    Connection con;
+    PreparedStatement ps;
+    ResultSet rs;
+    int resp;
+    
+    public List<Palabra> listarPalabras() {
+        String sql = "CALL sp_ListarPalabra()";
+        List<Palabra> listaPalabra = new ArrayList<>();
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Palabra p = new Palabra();
+                p.setId_Palabra(rs.getInt("id_Palabra"));
+                p.setPalabra(rs.getString("palabra"));
+                p.setPista1(rs.getString("pista1"));
+                p.setPista2(rs.getString("pista2"));
+                listaPalabra.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaPalabra;
+    }
     
 }

@@ -25,7 +25,6 @@
             </div>
             <div class="t-s">
                 <div id="cronometro" class="tiempo">05:00</div>
-                <button class="boton-S" onclick="salirJuego()">SALIR</button>
             </div>
             <p id="mensaje"></p>
             <div id="teclado" class="teclado">

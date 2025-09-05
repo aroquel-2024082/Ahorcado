@@ -10,17 +10,6 @@ let palabraOcultaDisplay = document.getElementById("palabra-oculta");
 let ahorcadoContainer = document.querySelector(".ahorcado-container");
 let pistaTexto = document.getElementById("pista-texto");
 
-let palabras = ["PYTHON", "HTML", "JAVASCRIPT", "CSS", "AJAX", "DATABASE"];
-
-let pistas = {
-    "PYTHON": "Es un lenguaje de programación muy popular para el desarrollo web y la ciencia de datos.",
-    "HTML": "Es la base de cualquier página web.",
-    "JAVASCRIPT": "Es el lenguaje que hace que las páginas web sean interactivas.",
-    "CSS": "Este lenguaje se usa para estilizar una página web.",
-    "AJAX": "Permite actualizar partes de una página web sin recargarla.",
-    "DATABASE": "Es un sistema que almacena y organiza datos."
-};
-
 let estado = [];
 let tiempo = 300;
 let intervaloCronometro;
@@ -30,13 +19,22 @@ let intentos = 6;
 let palabraSeleccionada = "";
 let errorCount = 0;
 
-function mezclar(array) {
-    let copia = [...array];
-    for (let i = copia.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [copia[i], copia[j]] = [copia[j], copia[i]];
+async function obtenerPalabra() {
+    try {
+        const response = await fetch('AhorcadoServlet');
+        if (!response.ok) {
+            throw new Error('Error al obtener la palabra');
+        }
+        const data = await response.json();
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        return data;
+    } catch (error) {
+        console.error('Error al obtener la palabra:', error);
+        mostrarDialogo("Error", "No se pudo obtener la palabra. Por favor, reinicia el juego.");
+        return null;
     }
-    return copia;
 }
 
 function dibujar() {
@@ -95,8 +93,17 @@ function verificar() {
     }
 }
 
-function iniciarJuego() {
+async function iniciarJuego() {
     if (juegoActivo) return;
+    
+    const palabraData = await obtenerPalabra();
+    if (!palabraData) {
+        return;
+    }
+    
+    palabraSeleccionada = palabraData.palabra;
+    pistaTexto.textContent = `${palabraData.pista1} - ${palabraData.pista2}`;
+
     tiempo = 300;
     intentos = 6;
     estado = [];
@@ -105,11 +112,6 @@ function iniciarJuego() {
     let partes = document.querySelectorAll('.ahorcado-parte');
     partes.forEach(parte => parte.classList.remove('visible'));
 
-    let indiceAleatorio = Math.floor(Math.random() * palabras.length);
-    palabraSeleccionada = palabras[indiceAleatorio];
-    
-    pistaTexto.textContent = pistas[palabraSeleccionada]; 
-    
     intervaloCronometro = setInterval(() => {
         if (tiempo > 0) {
             tiempo--;
@@ -125,6 +127,7 @@ function iniciarJuego() {
             mostrarDialogo("¡Derrota!", "⏰ ¡Tiempo terminado! Perdiste el juego. ¿Quieres intentarlo de nuevo?");
         }
     }, 1000);
+
     juegoActivo = true;
     mensaje.innerText = "";
     dibujar();
