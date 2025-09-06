@@ -8,7 +8,7 @@
 </head>
 <body>
     <video autoplay muted loop id="background-video" class="video-fondo">
-        <source src="img/VideoFondo.mp4" type="video/mp4">
+        <source src="img/VideoFondo3.mp4" type="video/mp4">
         Tu navegador no soporta el video de fondo.
     </video>
     <div class="encabezado">
@@ -74,7 +74,7 @@
             <div class="ahorcado-container">
                 <img src="img/Base.png" alt="Base" class="ahorcado-base">
                 <div class="ahorcado-partes">
-                    <img id="cabeza" src="img/Cabeza.png" alt="cabeza" class="ahorcado-parte">
+                    <img id="cabeza" src="img/CabezaDos.png" alt="cabeza" class="ahorcado-parte">
                     <img id="torso" src="img/Torzo.png" alt="torso" class="ahorcado-parte">
                     <img id="brazo-izquierdo" src="img/BrazoIzquierdo.png" alt="brazo-izquierdo" class="ahorcado-parte">
                     <img id="brazo-derecho" src="img/BrazoDerecho.png" alt="brazo-derecho" class="ahorcado-parte">

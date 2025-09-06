@@ -12,6 +12,7 @@
     
     <div class="login">
         <form action="Validar" method="POST" class="formulario">
+            <h1 style="font-size: 13px" >Usuario:1 Contraseña:1</h1>
             <h1>Iniciar Sesion</h1>
             <div class="sesion">
                 <input type="text" name="txtUsuario" placeholder="Usuario" required>
@@ -21,17 +22,11 @@
                 <input type="password" name="txtContrasena" placeholder="Contraseña" required>
                 <i class="bx bxs-lock-alt"></i>
             </div>
-            
             <div class="recordar">
                 <label><input type="checkbox">Recordarme</label>
                 <a href="#">¿Olvidaste la Contraseña?</a>
             </div>
-            
             <button type="submit" name="btnIngresar" value="Ingresar" class="btn">Ingresar</button>
-            
-            <div class="registrar">
-                <p>¿Aun no tiene cuenta?<a href="#">Registrar</a></p>
-            </div>
         </form>
     </div>
     

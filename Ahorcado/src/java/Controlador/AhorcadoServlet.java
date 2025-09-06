@@ -2,7 +2,6 @@ package Controlador;
 
 import Modelo.Palabra;
 import Modelo.PalabraDAO;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -28,8 +27,11 @@ public class AhorcadoServlet extends HttpServlet {
             Random random = new Random();
             Palabra palabraAleatoria = palabras.get(random.nextInt(palabras.size()));
 
-            Gson gson = new Gson();
-            String json = gson.toJson(palabraAleatoria);
+            String json = "{"
+                        + "\"palabra\": \"" + palabraAleatoria.getPalabra() + "\","
+                        + "\"pista1\": \"" + palabraAleatoria.getPista1() + "\","
+                        + "\"pista2\": \"" + palabraAleatoria.getPista2() + "\""
+                        + "}";
 
             out.print(json);
         } else {
@@ -54,5 +56,4 @@ public class AhorcadoServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
 }
