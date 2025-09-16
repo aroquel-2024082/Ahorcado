@@ -17,8 +17,40 @@ Create table Palabra (
     primary key PK_id_Palabra(id_Palabra)
 );
 
-insert into Usuario (nombreUsuario, contrasenia) values ('1','1');
-select * from Usuario;
+DELIMITER $$
+Create procedure sp_AgregarUsuario (
+    in nomUsuario VARCHAR(100),
+    in contra VARCHAR(100)
+)
+Begin
+    insert into Usuario (nombreUsuario, contrasenia)
+    values (nomUsuario, contra);
+end$$
+DELIMITER ;
+
+CALL sp_AgregarUsuario('Fiore', '1');
+CALL sp_AgregarUsuario('Belli', '2');
+CALL sp_AgregarUsuario('Alan', '3');
+CALL sp_AgregarUsuario('Cris', '4');
+CALL sp_AgregarUsuario('Adrian', '5');
+CALL sp_AgregarUsuario('Iver', '6');
+CALL sp_AgregarUsuario('Sara', '7');
+CALL sp_AgregarUsuario('Cavani', '8');
+CALL sp_AgregarUsuario('Aura', '9');
+CALL sp_AgregarUsuario('Jorge', '10');
+
+DELIMITER $$
+Create procedure sp_ListarUsuario ()
+Begin
+    select
+        id_Usuario,
+        nombreUsuario,
+        contrasenia
+    from Usuario;
+End$$
+DELIMITER ;
+
+CALL sp_ListarUsuario();
 
 DELIMITER $$
 	Create procedure sp_AgregarPalabra (
@@ -39,6 +71,11 @@ CALL sp_AgregarPalabra('DINOSAURIO', 'Es un reptil muy grande.', 'Jurasic word s
 CALL sp_AgregarPalabra('CHOCOLATE', 'Es rico, dulce y color cafe.', 'Se puede comor en barras o se puede beber caliente.');
 CALL sp_AgregarPalabra('CLASHROYALE', 'Juego de dispositivos moviles.', 'Se trata de tirar torres y su nombre empieza con C.');
 CALL sp_AgregarPalabra('GUATEMALA', 'Pais de america central.', 'Un centro turistico es el gran jaguar.');
+CALL sp_AgregarPalabra('MURCIELAGO', 'Es el unico mamifero que vuela.', 'Duerme de cabeza.');
+CALL sp_AgregarPalabra('OCELOTE', 'Es un felino manchado.', 'Habita en America y es un animal nocturno.');
+CALL sp_AgregarPalabra('BICICLETA', 'Es un vehiculo de dos ruedas.', 'Se impulsa pedaleando.');
+
+
 
 DELIMITER $$
 	Create procedure sp_ListarPalabra ()
