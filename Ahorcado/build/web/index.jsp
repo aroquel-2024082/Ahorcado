@@ -12,7 +12,6 @@
     
     <div class="login">
         <form action="Validar" method="POST" class="formulario">
-            <h1 style="font-size: 13px" >Usuario:1 Contraseña:1</h1>
             <h1>Iniciar Sesion</h1>
             <div class="sesion">
                 <input type="text" name="txtUsuario" placeholder="Usuario" required>

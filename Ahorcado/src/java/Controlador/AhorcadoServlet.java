@@ -30,7 +30,8 @@ public class AhorcadoServlet extends HttpServlet {
             String json = "{"
                         + "\"palabra\": \"" + palabraAleatoria.getPalabra() + "\","
                         + "\"pista1\": \"" + palabraAleatoria.getPista1() + "\","
-                        + "\"pista2\": \"" + palabraAleatoria.getPista2() + "\""
+                        + "\"pista2\": \"" + palabraAleatoria.getPista2() + "\","
+                        + "\"pista3\": \"" + palabraAleatoria.getPista3() + "\""
                         + "}";
 
             out.print(json);

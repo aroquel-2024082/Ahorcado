@@ -20,14 +20,18 @@ public class Palabra {
     @Column(name = "pista2")
     private String pistaDos;
 
+    @Column(name = "pista3")
+    private String pistaTres;
+
     public Palabra() {
     }
 
-    public Palabra(Integer id_Palabra, String palabra, String pistaUno, String pistaDos) {
+    public Palabra(Integer id_Palabra, String palabra, String pistaUno, String pistaDos, String pistaTres) {
         this.id_Palabra = id_Palabra;
         this.palabra = palabra;
         this.pistaUno = pistaUno;
         this.pistaDos = pistaDos;
+        this.pistaTres = pistaTres;
     }
 
     public Integer getId_Palabra() {
@@ -60,6 +64,14 @@ public class Palabra {
 
     public void setPistaDos(String pistaDos) {
         this.pistaDos = pistaDos;
+    }
+
+    public String getPistaTres() {
+        return pistaTres;
+    }
+
+    public void setPistaTres(String pistaTres) {
+        this.pistaTres = pistaTres;
     }
 }
 

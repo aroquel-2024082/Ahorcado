@@ -2,6 +2,7 @@ package com.angelroquel.AhorcadoPSpring.service;
 
 import com.angelroquel.AhorcadoPSpring.model.Usuario;
 import com.angelroquel.AhorcadoPSpring.repository.UsuarioRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.Optional;
 public class UsuarioImplements implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final ValidacionUsuario validacionUsuario;
 
-    public UsuarioImplements(UsuarioRepository usuarioRepository) {
+    public UsuarioImplements(UsuarioRepository usuarioRepository, ValidacionUsuario validacionUsuario) {
         this.usuarioRepository = usuarioRepository;
+        this.validacionUsuario = validacionUsuario;
     }
 
     @Override
@@ -29,16 +32,25 @@ public class UsuarioImplements implements UsuarioService {
 
     @Override
     public Usuario saveUsuario(Usuario usuario) {
+        String mensaje = validacionUsuario.validarUsuario(usuario, false); // false para "agregar"
+        if (mensaje != null) {
+            throw new DataIntegrityViolationException(mensaje);
+        }
         return usuarioRepository.save(usuario);
     }
 
     @Override
     public Usuario updateUsuario(Integer id, Usuario usuario) {
-        Usuario existingUsuario = usuarioRepository.findById(id).orElse(null);
-        if (existingUsuario != null) {
-            existingUsuario.setNombreUsuario(usuario.getNombreUsuario());
-            existingUsuario.setContrasenia(usuario.getContrasenia());
-            return usuarioRepository.save(existingUsuario);
+        Usuario existinUsuario = usuarioRepository.findById(id).orElse(null);
+        if (existinUsuario != null) {
+            usuario.setId_Usuario(id);
+            String mensaje = validacionUsuario.validarUsuario(usuario, true);
+            if (mensaje != null) {
+                throw new DataIntegrityViolationException(mensaje);
+            }
+            existinUsuario.setNombreUsuario(usuario.getNombreUsuario());
+            existinUsuario.setContrasenia(usuario.getContrasenia());
+            return usuarioRepository.save(existinUsuario);
         }
         return null;
     }

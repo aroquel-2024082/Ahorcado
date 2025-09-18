@@ -102,7 +102,7 @@ async function iniciarJuego() {
     }
     
     palabraSeleccionada = palabraData.palabra;
-    pistaTexto.textContent = `${palabraData.pista1} - ${palabraData.pista2}`;
+    pistaTexto.textContent = `${palabraData.pista1} - ${palabraData.pista2} - ${palabraData.pista3}`;
 
     tiempo = 300;
     intentos = 6;

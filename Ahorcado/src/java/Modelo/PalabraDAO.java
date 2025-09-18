@@ -29,6 +29,7 @@ public class PalabraDAO {
                 p.setPalabra(rs.getString("palabra"));
                 p.setPista1(rs.getString("pista1"));
                 p.setPista2(rs.getString("pista2"));
+                p.setPista3(rs.getString("pista3"));
                 listaPalabra.add(p);
             }
         } catch (Exception e) {

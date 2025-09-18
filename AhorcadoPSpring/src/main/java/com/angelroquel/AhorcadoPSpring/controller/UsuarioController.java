@@ -2,7 +2,9 @@ package com.angelroquel.AhorcadoPSpring.controller;
 
 import com.angelroquel.AhorcadoPSpring.model.Usuario;
 import com.angelroquel.AhorcadoPSpring.service.UsuarioService;
-
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,22 +25,42 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public Usuario getUsuarioById(@PathVariable Integer id) {
-        return usuarioService.getUsuarioById(id);
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer id) {
+        Usuario usuario = usuarioService.getUsuarioById(id);
+        if (usuario != null) {
+            return new ResponseEntity<>(usuario, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.saveUsuario(usuario);
+    public ResponseEntity<Object> createUsuario(@RequestBody Usuario usuario) {
+        try {
+            Usuario createdUsuario = usuarioService.saveUsuario(usuario);
+            return new ResponseEntity<>(createdUsuario, HttpStatus.CREATED);
+        } catch (DataIntegrityViolationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
-    public Usuario updateUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
-        return usuarioService.updateUsuario(id, usuario);
+    public ResponseEntity<Object> updateUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
+        try {
+            Usuario updatedUsuario = usuarioService.updateUsuario(id, usuario);
+            if (updatedUsuario != null) {
+                return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Usuario no encontrado para actualizar.", HttpStatus.NOT_FOUND);
+            }
+        } catch (DataIntegrityViolationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUsuario(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteUsuario(@PathVariable Integer id) {
         usuarioService.deleteUsuario(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
