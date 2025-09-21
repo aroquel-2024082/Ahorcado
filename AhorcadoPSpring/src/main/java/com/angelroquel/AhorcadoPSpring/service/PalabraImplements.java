@@ -19,6 +19,15 @@ public class PalabraImplements implements PalabraService {
         this.valadacionPalabra = valadacionPalabra;
     }
 
+    private void validarCamposVacios(Palabra palabra) {
+        if (palabra.getPalabra() == null || palabra.getPalabra().trim().isEmpty() ||
+                palabra.getPistaUno() == null || palabra.getPistaUno().trim().isEmpty() ||
+                palabra.getPistaDos() == null || palabra.getPistaDos().trim().isEmpty() ||
+                palabra.getPistaTres() == null || palabra.getPistaTres().trim().isEmpty()) {
+            throw new IllegalArgumentException("Necesitas llenar todos los campos para continuar.");
+        }
+    }
+
     @Override
     public List<Palabra> getAllPalabras() {
         return palabraRepository.findAll();
@@ -32,6 +41,7 @@ public class PalabraImplements implements PalabraService {
 
     @Override
     public Palabra savePalabra(Palabra palabra) {
+        validarCamposVacios(palabra);
         String mensaje = valadacionPalabra.validarPalabra(palabra, false);
         if (mensaje != null) {
             throw new DataIntegrityViolationException(mensaje);
@@ -41,6 +51,7 @@ public class PalabraImplements implements PalabraService {
 
     @Override
     public Palabra updatePalabra(Integer id, Palabra palabra) {
+        validarCamposVacios(palabra);
         Palabra existinPalabra = palabraRepository.findById(id).orElse(null);
         if (existinPalabra != null) {
             palabra.setId_Palabra(id);

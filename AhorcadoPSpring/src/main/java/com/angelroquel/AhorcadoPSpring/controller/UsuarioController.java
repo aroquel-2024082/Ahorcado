@@ -6,6 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -39,6 +40,8 @@ public class UsuarioController {
         try {
             Usuario createdUsuario = usuarioService.saveUsuario(usuario);
             return new ResponseEntity<>(createdUsuario, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -48,13 +51,13 @@ public class UsuarioController {
     public ResponseEntity<Object> updateUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
         try {
             Usuario updatedUsuario = usuarioService.updateUsuario(id, usuario);
-            if (updatedUsuario != null) {
-                return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("Usuario no encontrado para actualizar.", HttpStatus.NOT_FOUND);
-            }
+            return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity<>(e.getReason(), e.getStatusCode());
         }
     }
 

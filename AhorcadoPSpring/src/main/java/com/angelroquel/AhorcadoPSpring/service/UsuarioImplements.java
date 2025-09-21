@@ -19,6 +19,13 @@ public class UsuarioImplements implements UsuarioService {
         this.validacionUsuario = validacionUsuario;
     }
 
+    private void validarCamposVacios(Usuario usuario) {
+        if (usuario.getNombreUsuario() == null || usuario.getNombreUsuario().trim().isEmpty() ||
+                usuario.getContrasenia() == null || usuario.getContrasenia().trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre de usuario y la contraseña no pueden estar vacíos.");
+        }
+    }
+
     @Override
     public List<Usuario> getAllUsuarios() {
         return usuarioRepository.findAll();
@@ -32,6 +39,7 @@ public class UsuarioImplements implements UsuarioService {
 
     @Override
     public Usuario saveUsuario(Usuario usuario) {
+        validarCamposVacios(usuario);
         String mensaje = validacionUsuario.validarUsuario(usuario, false); // false para "agregar"
         if (mensaje != null) {
             throw new DataIntegrityViolationException(mensaje);
@@ -41,6 +49,7 @@ public class UsuarioImplements implements UsuarioService {
 
     @Override
     public Usuario updateUsuario(Integer id, Usuario usuario) {
+        validarCamposVacios(usuario);
         Usuario existinUsuario = usuarioRepository.findById(id).orElse(null);
         if (existinUsuario != null) {
             usuario.setId_Usuario(id);
