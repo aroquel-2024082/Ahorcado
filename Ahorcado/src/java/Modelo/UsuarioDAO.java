@@ -24,14 +24,14 @@ public class UsuarioDAO {
             ps.setString(2, contrasenia);
             rs = ps.executeQuery();
             
-            while (rs.next()) {
+            if (rs.next()) {
                 usuario.setId_Usuario(rs.getInt("id_Usuario"));
                 usuario.setNombreUsuario(rs.getString("nombreUsuario"));
                 usuario.setConstrasenia(rs.getString("contrasenia"));
+            } else {
+                System.out.println("El usuario o contrasenia son incorrectos");
             }
-            
         } catch (Exception e) {
-            System.out.println("El usuario o contraseña son incorrectos");
             e.printStackTrace();
         }
         return usuario;
