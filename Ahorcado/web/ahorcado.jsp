@@ -90,9 +90,10 @@
     </div>
     <div id="dialogoCuadro"></div>
     <div id="dialogo" class="dialogo">
-        <h3 id="dialogoTitulo"></h3>
-        <p id="dialogoMensaje"></p>
-        <button onclick="cerrarDialogo()">Cerrar</button>
+        <h3 id="dialogoTitulo"></h3>
+        <img id="dialogoImagen" src="" alt="Resultado del juego" style="">
+        <p id="dialogoMensaje"></p>
+        <button onclick="cerrarDialogo()">Cerrar</button>
     </div>
     <script src="js/index.js"></script>
 </body>

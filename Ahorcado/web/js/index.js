@@ -5,10 +5,17 @@ let dialogo = document.getElementById("dialogo");
 let dialogoCuadro = document.getElementById("dialogoCuadro");
 let dialogoTitulo = document.getElementById("dialogoTitulo");
 let dialogoMensaje = document.getElementById("dialogoMensaje");
+let dialogoImagen = document.getElementById("dialogoImagen");
 let teclado = document.getElementById("teclado");
 let palabraOcultaDisplay = document.getElementById("palabra-oculta");
 let ahorcadoContainer = document.querySelector(".ahorcado-container");
 let pistaTexto = document.getElementById("pista-texto");
+
+let imagenEstado = {
+    derrota: "img/Derrota.png",
+    victoria: "img/Victoria.png",
+    tiempoAgotado: "img/TiempoAgotado.png"
+};
 
 let estado = [];
 let tiempo = 300;
@@ -84,12 +91,12 @@ function verificar() {
         mensaje.innerText = " 🎉 ¡Felicidades! Adivinaste la palabra.";
         clearInterval(intervaloCronometro);
         juegoActivo = false;
-        mostrarDialogo("¡Victoria!", "🎉 ¡Felicidades! Adivinaste la palabra a tiempo. ¡Eres un genio!");
+        mostrarDialogo("¡Victoria!", `🎉 ¡Felicidades! Adivinaste la palabra: ${palabraSeleccionada.toUpperCase()}. ¡Eres un genio!`, imagenEstado.victoria);
     } else if (intentos === 0) {
         mensaje.innerText = `⏰ ¡Perdiste! La palabra era ${palabraSeleccionada}.`;
         clearInterval(intervaloCronometro);
         juegoActivo = false;
-        mostrarDialogo("¡Derrota!", "⏰ ¡Intentos agotados! Perdiste el juego. ¿Quieres intentarlo de nuevo?");
+        mostrarDialogo("¡Derrota!", `⏰ ¡Intentos agotados! La palabra era: ${palabraSeleccionada.toUpperCase()}. ¿Quieres intentarlo de nuevo?`, imagenEstado.derrota);
     }
 }
 
@@ -124,7 +131,7 @@ async function iniciarJuego() {
             clearInterval(intervaloCronometro);
             juegoActivo = false;
             mensaje.innerText = `⏰ ¡Tiempo agotado! La palabra era ${palabraSeleccionada}.`;
-            mostrarDialogo("¡Derrota!", "⏰ ¡Tiempo terminado! Perdiste el juego. ¿Quieres intentarlo de nuevo?");
+            mostrarDialogo("¡Derrota!", `⏰ ¡Tiempo terminado! La palabra era: ${palabraSeleccionada.toUpperCase()}. ¿Quieres intentarlo de nuevo?`, imagenEstado.tiempoAgotado);
         }
     }, 1000);
 
@@ -198,11 +205,20 @@ function reanudarJuego() {
     }
 }
 
-function mostrarDialogo(titulo, mensaje) {
+function mostrarDialogo(titulo, mensaje, imagenURL = null) {
     dialogoTitulo.innerText = titulo;
     dialogoMensaje.innerText = mensaje;
+    if (imagenURL) {
+        dialogoImagen.src = imagenURL;
+        dialogoImagen.classList.add("visible");
+    } else {
+        dialogoImagen.src = "";
+        dialogoImagen.classList.remove("visible");
+    }
     dialogo.style.display = "block";
-    dialogoCuadro.style.display = "block";
+    if (dialogoCuadro) {
+        dialogoCuadro.style.display = "block";
+    }
 }
 
 function cerrarDialogo() {

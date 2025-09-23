@@ -14,7 +14,7 @@
         <form action="Validar" method="POST" class="formulario">
             <h1>Iniciar Sesion</h1>
             <div class="sesion">
-                <input type="text" name="txtUsuario" placeholder="Usuario" required>
+                <input type="text" name="txtUsuario" placeholder="Usuario o Email" required>
                 <i class="bx bxs-user"></i>
             </div>
             <div class="sesion">

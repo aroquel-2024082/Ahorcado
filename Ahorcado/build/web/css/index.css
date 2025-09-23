@@ -411,7 +411,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(30, 30, 30, 0.9);
-    padding: 40px;
+    padding: 5px;
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 100;
@@ -430,6 +430,20 @@ body {
     font-size: 1.2em;
     margin-bottom: 25px;
 }
+
+#dialogoImagen {
+    display: none;
+    width: 500px; 
+    height: auto;
+    margin: 0 auto 15px;
+    max-width: 100%;
+    min-width: 0;
+}
+
+#dialogoImagen.visible {
+    display: block;
+}
+
 
 .dialogo button {
     padding: 12px 25px;
