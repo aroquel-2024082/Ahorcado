@@ -68,6 +68,7 @@
                 <button class="boton-R" onclick="reiniciar()">REINICIAR<i class='bxr  bx-refresh-cw'></i> </button>
                 <button class="boton-P" onclick="pausarJuego()">PAUSAR<i class='bxr  bx-pause'></i> </button>
                 <button class="boton-RJ" onclick="reanudarJuego()">REANUDAR<i class='bxr  bx-rewind'></i> </button>
+                <a href="index.jsp" class="boton-S">SALIR<i class='bxr bx-undo'></i></a>
             </div>
         </div>
         <div class="Imagen-De-Referencia" id="imagenJuegoContainer">
