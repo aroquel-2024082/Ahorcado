@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Juego del Ahorcado</title>
     <link rel="stylesheet" href="css/index.css"/>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <video autoplay muted loop id="background-video" class="video-fondo">
@@ -63,10 +64,11 @@
                 </div>
             </div>
             <div class="botones">
-                <button class="boton-C" onclick="iniciarJuego()">COMENZAR</button>
-                <button class="boton-R" onclick="reiniciar()">REINICIAR</button>
-                <button class="boton-P" onclick="pausarJuego()">PAUSAR</button>
-                <button class="boton-RJ" onclick="reanudarJuego()">REANUDAR</button>
+                <button class="boton-C" onclick="iniciarJuego()">COMENZAR<i class='bxr  bx-play'></i></button>
+                <button class="boton-R" onclick="reiniciar()">REINICIAR<i class='bxr  bx-refresh-cw'></i> </button>
+                <button class="boton-P" onclick="pausarJuego()">PAUSAR<i class='bxr  bx-pause'></i> </button>
+                <button class="boton-RJ" onclick="reanudarJuego()">REANUDAR<i class='bxr  bx-rewind'></i> </button>
+                <a href="index.jsp" class="boton-S">SALIR<i class='bxr bx-undo'></i></a>
             </div>
         </div>
         <div class="Imagen-De-Referencia" id="imagenJuegoContainer">
@@ -89,9 +91,10 @@
     </div>
     <div id="dialogoCuadro"></div>
     <div id="dialogo" class="dialogo">
-        <h3 id="dialogoTitulo"></h3>
-        <p id="dialogoMensaje"></p>
-        <button onclick="cerrarDialogo()">Cerrar</button>
+        <h3 id="dialogoTitulo"></h3>
+        <img id="dialogoImagen" src="" alt="Resultado del juego" style="">
+        <p id="dialogoMensaje"></p>
+        <button onclick="cerrarDialogo()">Cerrar</button>
     </div>
     <script src="js/index.js"></script>
 </body>

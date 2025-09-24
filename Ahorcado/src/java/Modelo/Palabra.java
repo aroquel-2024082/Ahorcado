@@ -5,15 +5,17 @@ public class Palabra {
     String palabra;
     String pista1;
     String pista2;
+    String pista3;
 
     public Palabra() {
     }
 
-    public Palabra(int id_Palabra, String palabra, String pista1, String pista2) {
+    public Palabra(int id_Palabra, String palabra, String pista1, String pista2, String pista3) {
         this.id_Palabra = id_Palabra;
         this.palabra = palabra;
         this.pista1 = pista1;
         this.pista2 = pista2;
+        this.pista3 = pista3;
     }
 
     public int getId_Palabra() {
@@ -48,10 +50,17 @@ public class Palabra {
         this.pista2 = pista2;
     }
 
+    public String getPista3() {
+        return pista3;
+    }
+
+    public void setPista3(String pista3) {
+        this.pista3 = pista3;
+    }
+
     @Override
     public String toString() {
-        return "Palabra{" + "id_Palabra=" + id_Palabra + ", palabra=" + palabra + ", pista1=" + pista1 + ", pista2=" + pista2 + '}';
+        return "Palabra{" + "id_Palabra=" + id_Palabra + ", palabra=" + palabra + ", pista1=" + pista1 + ", pista2=" + pista2 + ", pista3=" + pista3 + '}';
     }
-    
-    
+ 
 }
